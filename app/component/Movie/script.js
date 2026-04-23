@@ -27,6 +27,7 @@ Movie.formatMany = function(movies){
 
 export { Movie };
 
+
 /*let templateFile = await fetch("./component/Movie/template.html");
 let template = await templateFile.text();
 

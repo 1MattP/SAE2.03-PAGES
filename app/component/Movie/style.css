@@ -1,10 +1,22 @@
-.movie{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.movie {
+    margin-top: 1rem;
 
-.movie__movie{
-    display: flex;
-    flex-direction: column;
+    .movie__list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    .movie__image {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0.25rem;
+        aspect-ratio: 9/13;
+
+    }
+
+    @media (min-width: 44rem) {
+        .movie__list {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
 }
