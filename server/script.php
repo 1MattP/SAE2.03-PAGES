@@ -55,6 +55,9 @@ if ( isset($_REQUEST['todo']) ){
     case 'readmovies':
       $data = readMoviesController();
       break;
+    case 'addMovie':
+      $data = addMovieController();
+      break;
 
 
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
@@ -62,6 +65,7 @@ if ( isset($_REQUEST['todo']) ){
       http_response_code(400); // 400 == "Bad request"
       exit();
   }
+
 
   /**
    * A ce stade, on a appelé la fonction de contrôleur appropriée et stocké le résultat dans la variable $data.
