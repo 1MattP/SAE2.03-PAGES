@@ -36,7 +36,11 @@
     C.getMovie = async function (movie) {
       let input = document.querySelector('#content');
       let data = await DataMovie.requestMovies();
-      V.renderMovie(data);
+      if (data.length == 0) {
+        print("Aucun film disponible pour le moment.");
+      } else {
+        V.renderMovies(data);
+      }
     }
     // Vue (contient tout ce qui est relatif à l'affichage)
     window.V = {};
@@ -60,4 +64,3 @@
     C.start(); // Démarre l'application
   </script>
 </body>
-
