@@ -1,12 +1,13 @@
 <div class="addMovie">
     <h2 class="addMovie__title"># Ajouter ou modifier un film</h4>
         <form class="addMovie__form">
-            <input required type="text" name="name" placeholder="Saisir une titre" required>
-            <input required type="text" name="director" placeholder="Saisir un Réalisateur" required>
-            <input required type="number" name="year" placeholder="anné de sortie" required>
-            <input required type="number" name="length" placeholder="Saisir une durée" required>
-            <input required type="text" name="description" placeholder="Saisir une description" required>
-            <input required type="text" name="image" placeholder="Saisir l'image" required>
+
+            <input required type="text" name="name" placeholder="Titre" required>
+            <input required type="text" name="director" placeholder="Réalisateur" required>
+            <input required type="number" name="year" placeholder="année de sortie" required>
+            <input required type="number" name="length" placeholder="Durée(minutes)" required>
+            <input required type="text" name="description" placeholder="Description" required>
+            <input required type="text" name="image" placeholder="Image" required>
 
             <select name="id_category" required>
                 <option value="1">Action</option>
@@ -22,9 +23,9 @@
             </select>
            
 
-            <input required type="url" name="trailer" placeholder="Saisir un url" required>
-            <input required type="number" name="min_age" placeholder="Saisir un âge"  min="0" max="120" required>
+            <input required type="url" name="trailer" placeholder="Trailer(url)" required>
+            <input required type="number" name="min_age" placeholder="Age Requis"  min="0" max="120" required>
 
-            <input onclick="{{handler}}" type="button" value="Update" name="todo">
+            <input onclick="{{handler}}" type="submit" value="Update" name="todo">
         </form>
 </div>.

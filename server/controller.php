@@ -39,6 +39,8 @@ function addMovieController(){
     $id_category = $_REQUEST['id_category'];
 
 
+
+
     $ok = addMovie($name, $year, $description, $length, $director, $image, $trailer, $min_age, $id_category);
 
     if ($ok!=0){
