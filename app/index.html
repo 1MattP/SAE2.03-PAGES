@@ -12,10 +12,12 @@
   <header id="header"></header>
 
   <section id="content"></section>
+  <section id="detail"></section>
 
   <script type="module">
     import { NavBar } from "./component/NavBar/script.js";
     import { Movie } from "./component/Movie/script.js";
+    import { MovieDetail } from "./component/MovieDetail/script.js";
     import { DataMovie } from "./data/dataMovie.js";
     // Controleur
     // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -34,7 +36,6 @@
     };
 
     C.getMovie = async function (movie) {
-      let input = document.querySelector('#content');
       let data = await DataMovie.requestMovies();
       if (data.length == 0) {
         print("Aucun film disponible pour le moment.");
@@ -42,6 +43,12 @@
         V.renderMovie(data);
       }
     }
+
+    C.handlerDetail = async function (id) {
+      let movie = await DataMovie.requestMovieDetails(id);
+      V.renderMovieDetail(movie);
+    };
+
     // Vue (contient tout ce qui est relatif à l'affichage)
     window.V = {};
 
@@ -58,8 +65,14 @@
       header.innerHTML = NavBar.format(hAbout);
     };
     V.renderMovie = function (allmovie) {
+      let content = document.querySelector('#content');
       content.innerHTML = Movie.formatMany(allmovie);
     };
+
+    V.renderMovieDetail = function (moviedetail) {
+      let content = document.querySelector('#content');
+      content.innerHTML = MovieDetail.format(moviedetail);
+    }
 
     C.start(); // Démarre l'application
   </script>

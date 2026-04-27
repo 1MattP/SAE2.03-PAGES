@@ -22,15 +22,23 @@
     C.handlerAddMovie = async function () {
 
       let form = document.querySelector('.addMovie__form');
+      if (!form.reportValidity()) {
+        return;
+      }
       let fd = new FormData(form);
       let res = await DataMovie.add(fd);
       V.renderLog(res);
 
     };
 
+    C.getCategory = async function (category) {
+      let data = await DataMovie.requestCategory();
+      V.renderMovieForm(data);
+    }
+
     C.start = function () {
       V.renderLog("Démarrage de l'application");
-      V.renderMovieForm("C.handlerAddMovie()");
+      C.getCategory();
     };
 
 
@@ -42,9 +50,9 @@
       content.innerHTML = Log.format(txt);
     };
 
-    V.renderMovieForm = function (handler) {
+    V.renderMovieForm = function (data) {
       let content = document.querySelector("#form");
-      content.innerHTML = MovieForm.format(handler);
+      content.innerHTML = MovieForm.formatMany(data);
     };
 
 

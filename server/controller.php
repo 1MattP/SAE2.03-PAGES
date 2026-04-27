@@ -26,6 +26,12 @@ function readMoviesController(){
     return $movies;
 }
 
+function readCategoryController(){
+    $category = getAllcategory();
+    return $category;
+}
+
+
 function addMovieController(){
 
     $name = $_REQUEST['name'];
@@ -38,15 +44,20 @@ function addMovieController(){
     $min_age = $_REQUEST['min_age'];
     $id_category = $_REQUEST['id_category'];
 
-
-
-
+    
     $ok = addMovie($name, $year, $description, $length, $director, $image, $trailer, $min_age, $id_category);
 
     if ($ok!=0){
-        return "Le film a était ajouté avec succès";
+        return "Le film a été ajouté avec succès";
     }
     else{
         return false;
     }
 }
+
+function readMoviesDetailController(){
+    $id = $_REQUEST['id'];
+    $movies =  getMovieDetail($id);
+    return $movies;
+}
+
