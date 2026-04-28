@@ -77,13 +77,16 @@ function addMovie($name, $year, $description, $length, $director, $image, $trail
 
 function getMovieDetail($id){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT name, year, description, length,  director, image, trailer, min_age, id_category FROM Movie 
-            WHERE id = :id";
+
+    $sql = "SELECT  m.id, m.name AS movie_name, m.year, m.description, m.length, m.director, m.image, m.trailer, m.min_age, c.name AS category_name FROM Movie m
+            JOIN Category c ON m.id_category = c.id
+            WHERE m.id = :id";
+
     $stmt = $cnx->prepare($sql);
-    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
-    $res = $stmt->fetch(PDO::FETCH_OBJ); 
-    return $res;
+
+    return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
 

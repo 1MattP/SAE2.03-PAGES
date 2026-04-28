@@ -6,14 +6,18 @@ let MovieDetail = {};
 MovieDetail.format = function(moviedetail){
     let html = template;
 
-    html = html.replaceAll('{{name}}', moviedetail.name);
-    html = html.replaceAll('{{image}}', moviedetail.image);
+    html = html.replaceAll('{{name}}', moviedetail.movie_name);
+    html = html.replaceAll('{{image}}', "../server/images/" + moviedetail.image);
     html = html.replaceAll('{{description}}', moviedetail.description);
     html = html.replaceAll('{{director}}', moviedetail.director);
-    html = html.replaceAll('{{id_category}}', moviedetail.id_category);
+    html = html.replaceAll('{{year}}', moviedetail.year);
+    html = html.replaceAll('{{min_age}}', moviedetail.min_age);
+    html = html.replaceAll('{{id_category}}', moviedetail.category_name);
     html = html.replaceAll('{{trailer}}', moviedetail.trailer);
+    
 
     return html;
 }
 
 export {MovieDetail};
+

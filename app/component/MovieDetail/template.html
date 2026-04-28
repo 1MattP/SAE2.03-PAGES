@@ -1,8 +1,16 @@
 <div class="moviedetail">
-    <h2 class="moviedetail__title">{{name}}</h2>
-    <img class="moviedetail__img" src="{{image}}" alt="img">
-    <p class="moviedetail__descrition">{{description}}</p>
-    <p class="moviedetail__director">{{director}}</p>
-    <p class="moviedetail__director">{{id_category}}</p>
+    <div class="moviedetail__top">
+        <div class="moviedetail__title">
+            <h2 class="moviedetail__name">{{name}}</h2>
+            <img class="moviedetail__img" src="{{image}}" alt="img">
+        </div>
+        <div class="moviedetail__info">
+              <p class="moviedetail__min_age">âge: {{min_age}}</p>
+            <p class="moviedetail__year">année: {{year}}</p>
+            <p class="moviedetail__id_categoryr">catégorie: {{id_category}}</p>
+            <p class="moviedetail__director">réalisateur: {{director}}</p>
+            <p class="moviedetail__descrition">description: {{description}}</p>
+        </div>
+    </div>
     <iframe class="moviedetail__trailer" src="{{trailer}}" frameborder="0"></iframe>
 </div>
