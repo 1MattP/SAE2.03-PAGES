@@ -13,6 +13,11 @@
         aspect-ratio: 9/13;
 
     }
+    .movie__movie{
+        padding: 0.5rem;
+        border: 1px solid black;
+        border-radius: 1rem;
+    }
 
     @media (min-width: 44rem) {
         .movie__list {

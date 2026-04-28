@@ -61,3 +61,5 @@ function readMoviesDetailController(){
     return $movies;
 }
 
+
+

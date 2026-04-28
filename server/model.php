@@ -19,19 +19,23 @@ define("DBLOGIN", "pages39");
 define("DBPWD", "pages39");
 
 
+
 function getAllMovies(){
     // Connexion à la base de données
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     // Requête SQL pour récupérer le menu avec des paramètres
-    $sql = "select id, name, image from Movie";
+    $sql = "SELECT m.id, m.name AS movie_name,  m.image, c.name AS category_name FROM Movie m
+            JOIN Category c ON m.id_category = c.id
+            ORDER BY c.name, m.name";
     // Prépare la requête SQL
     $stmt = $cnx->prepare($sql);
     // Exécute la requête SQL
     $stmt->execute();
     // Récupère les résultats de la requête sous forme d'objets
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-    return $res; // Retourne les résultats
+    return $res;// Retourne les résultats
 }
+
 
 function getAllcategory(){
     // Connexion à la base de données
@@ -88,5 +92,4 @@ function getMovieDetail($id){
 
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
-
 

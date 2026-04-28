@@ -1,4 +1,5 @@
 .moviedetail {
+
     .moviedetail__top {
         display: flex;
         flex-direction: row;
@@ -7,26 +8,46 @@
     }
 
     .moviedetail__top {
-        justify-content: left;
+        display: flex;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+
     }
 
     .moviedetail__title {
-        flex-direction: row;
-        justify-content: left;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .moviedetail__info {}
+    .moviedetail__name {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .moviedetail__info {
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
 
 
     .moviedetail__img {
-        width: 50%;
-        object-fit: cover;
-        justify-content: left;
-        border-radius: 0.25rem;
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.5;
 
     }
 
     .moviedetail__trailer {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 0.25rem;
     }
 
 }
+
+
+
+
+
+

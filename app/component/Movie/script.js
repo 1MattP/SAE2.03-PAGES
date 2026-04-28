@@ -10,7 +10,7 @@ Movie.format = function(movie){
     let li = templateLi;
 
     li = li.replaceAll('{{image}}', "../server/images/" + movie.image);
-    li = li.replaceAll('{{name}}', movie.name);
+    li = li.replaceAll('{{name}}', movie.movie_name);
     li = li.replaceAll('{id}', movie.id);
 
     return li;
