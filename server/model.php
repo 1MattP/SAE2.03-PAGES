@@ -111,3 +111,15 @@ function addProfile($name, $avatar, $min_age){
 
     return $res; 
 }
+
+function getAllProfile(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT id, name, avatar FROM Profile";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res;
+}
+
+
+

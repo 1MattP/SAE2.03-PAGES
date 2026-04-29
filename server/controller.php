@@ -77,3 +77,8 @@ function addProfileController(){
         return false;
     }
 }
+
+function readProfileController(){
+    $profiles = getAllProfile();
+    return $profiles;
+}

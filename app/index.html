@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <section id="profile" class="profile profile__hidden"></section>
   <header id="header"></header>
 
   <section id="content"></section>
@@ -18,8 +19,10 @@
     import { Movie } from "./component/Movie/script.js";
     import { MovieCategory } from "./component/MovieCategory/script.js";
     import { MovieDetail } from "./component/MovieDetail/script.js";
+    import { OverlayProfile } from "./component/OverlayProfile/script.js";
 
     import { DataMovie } from "./data/dataMovie.js";
+    import { DataProfile } from "./data/dataProfile.js";
 
     // Controleur
     // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -27,13 +30,15 @@
     window.C = {};
 
     C.handlerAbout = function () {
-      C.start();
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()");
+      C.allcategory();
     };
 
     C.start = function () {
-      V.renderNavBar("C.handlerAbout()");
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()");
       C.getMovie();
       C.allcategory();
+      C.getProfile();
     };
 
     C.getMovie = async function (movie) {
@@ -49,17 +54,31 @@
       let movie = await DataMovie.requestMovieDetails(id);
       V.renderMovieDetail(movie);
     };
+
+
     C.allcategory = async function () {
       let categories = await DataMovie.requestCategory();
       let movies = await DataMovie.requestMovies();
       for (let category of categories) {
-        category.movies = movies.filter(movie => movie.category_name === category.name);
+        category.movies = movies.filter(movie => movie.category_name == category.name);
       }
       V.renderMovieCategory(categories);
     };
 
+    C.getProfile = async function () {
+      let data = await DataProfile.read();
+      V.renderOverlayProfile(data);
+      document.querySelector('#profile').classList.remove('profile__hidden');
+    };
 
+    C.selectProfile = function (profilname) {
+      document.querySelector('#profile').classList.add('profile__hidden');
+      console.log("Profil sélectionné :", profilname);
+    };
 
+    C.handlerProfile = function () {
+      document.querySelector('#profile').classList.remove('profile__hidden');
+    };
     // Vue (contient tout ce qui est relatif à l'affichage)
     window.V = {};
 
@@ -71,9 +90,9 @@
      * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
      * formaté par le composant NavBar.
      */
-    V.renderNavBar = function (hAbout) {
+    V.renderNavBar = function (hAbout, hProfile) {
       let header = document.querySelector("#header");
-      header.innerHTML = NavBar.format(hAbout);
+      header.innerHTML = NavBar.format(hAbout, hProfile);
     };
     V.renderMovie = function (allmovie) {
       let content = document.querySelector('#content');
@@ -88,6 +107,13 @@
       let content = document.querySelector('#content');
       content.innerHTML = MovieCategory.formatMany(moviecategory);
     }
+    V.renderOverlayProfile = function (allprofil) {
+      let content = document.querySelector('#profile');
+      content.innerHTML = OverlayProfile.formatMany(allprofil);
+
+
+    }
+
 
     C.start(); // Démarre l'application
   </script>

@@ -12,7 +12,6 @@ let MovieCategory = {};
 
 MovieCategory.format = function (category) {
     let li = templateLi;
-
     li = li.replaceAll('{{category}}', category.name);
     if (category.movies) {
         let moviesHTML = Movie.formatMany(category.movies);
@@ -24,7 +23,6 @@ MovieCategory.format = function (category) {
 
 MovieCategory.formatMany = function (categories) {
     let html = '';
-
     for (const movie of categories) {
         html += MovieCategory.format(movie);
     }
