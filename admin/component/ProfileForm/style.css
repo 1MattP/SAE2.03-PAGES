@@ -1,23 +1,23 @@
-.addMovie {
+.addProfile {
     max-width: 30rem;
     margin: 2rem auto;
     padding: 2rem;
     border: 1px solid #e5e7eb;
     border-radius: 0.75rem;
 
-    .addMovie__title {
+    .addProfile__title {
         font-size: 1.1rem;
         font-weight: 600;
         margin: 0 0 1.5rem 0;
     }
 
-    .addMovie__form {
+    .addProfile__form {
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
     }
 
-    .addMovie__info {
+    .addProfile__info {
         width: 100%;
         padding: 0.6rem 0.9rem;
         font-size: 0.95rem;
@@ -27,13 +27,14 @@
 
     }
 
-    .addMovie__form select {
+    .addProfile__form select {
         cursor: pointer;
         appearance: none;
         padding-right: 2.25rem;
     }
 
-    .addMovie__button {
+
+    .addProfile__button {
         padding: 0.6rem;
         font-size: 0.95rem;
         font-weight: 500;
@@ -46,8 +47,10 @@
         transition: background 0.15s, transform 0.1s;
     }
 
-    .addMovie__button:hover {
+    .addProfile__button:hover {
         background: #374151;
     }
+
+
 
 }

@@ -61,5 +61,19 @@ function readMoviesDetailController(){
     return $movies;
 }
 
+function addProfileController(){
 
+    $name = $_REQUEST['name'];
+    $avatar = $_REQUEST['avatar'];
+    $min_age = $_REQUEST['min_age'];
 
+    
+    $ok = addProfile($name, $avatar, $min_age);
+
+    if ($ok!=0){
+        return "Le Profile a bien été ajouté avec succès";
+    }
+    else{
+        return false;
+    }
+}
