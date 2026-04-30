@@ -8,10 +8,10 @@ let OverlayProfile = {};
 
 OverlayProfile.format = function(profile){
     let li = templateLi;
-
-    li = li.replaceAll('{{img}}', "../server/images/" + profile.image);
+    li = li.replaceAll('{{img}}', "../server/images/profiles/" + profile.avatar);
     li = li.replaceAll('{{name}}', profile.name);
     li = li.replaceAll('{{profilname}}', profile.name);
+    li = li.replaceAll('{{min_age}}', profile.min_age);
 
     return li;
 }
@@ -24,6 +24,7 @@ OverlayProfile.formatMany = function(profiles){
 
     return template.replaceAll('{{OverlayList}}', html);
 }
+
 
 export { OverlayProfile };
 

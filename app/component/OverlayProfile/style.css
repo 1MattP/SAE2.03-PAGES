@@ -14,6 +14,25 @@
     flex-direction: row;
     gap: 2rem;
   }
+
+  .OverlayProfile__avatar {
+    border-radius: 1rem;
+    width: 6.25rem;
+    height: 6.25rem;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  .OverlayProfile__profiles {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .OverlayProfile__profiles:hover {
+    transform: translateY(-5px);
+  }
 }
 
 .profile__hidden {

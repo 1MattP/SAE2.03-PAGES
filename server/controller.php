@@ -22,7 +22,15 @@ require("model.php");
 
 
 function readMoviesController(){
-    $movies = getAllMovies();
+
+    $age = $_REQUEST['age'];
+
+    if ($age == 0) {
+     $movies = getAllMovies(0);
+    }
+    else {
+     $movies = getAllMovies($age);
+    }
     return $movies;
 }
 

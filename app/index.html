@@ -42,9 +42,9 @@
     };
 
     C.getMovie = async function (movie) {
-      let data = await DataMovie.requestMovies();
+      let data = await DataMovie.requestMovies(C.currentProfileAge);
       if (data.length == 0) {
-        print("Aucun film disponible pour le moment.");
+        console.log("Aucun film disponible pour le moment.");
       } else {
         V.renderMovie(data);
       }
@@ -58,7 +58,7 @@
 
     C.allcategory = async function () {
       let categories = await DataMovie.requestCategory();
-      let movies = await DataMovie.requestMovies();
+      let movies = await DataMovie.requestMovies(C.currentProfileAge);
       for (let category of categories) {
         category.movies = movies.filter(movie => movie.category_name == category.name);
       }
@@ -67,13 +67,18 @@
 
     C.getProfile = async function () {
       let data = await DataProfile.read();
+      
       V.renderOverlayProfile(data);
       document.querySelector('#profile').classList.remove('profile__hidden');
     };
-
-    C.selectProfile = function (profilname) {
+    C.currentProfileAge = 0;
+    C.selectProfile = function (profilname, min_age) {
+      C.currentProfileAge = min_age;
       document.querySelector('#profile').classList.add('profile__hidden');
-      console.log("Profil sélectionné :", profilname);
+      console.log("Profil sélectionné :", profilname, "âge:", min_age);
+
+      C.getMovie();
+      C.allcategory();
     };
 
     C.handlerProfile = function () {

@@ -20,15 +20,17 @@ define("DBPWD", "pages39");
 
 
 
-function getAllMovies(){
+function getAllMovies($age){
     // Connexion à la base de données
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     // Requête SQL pour récupérer le menu avec des paramètres
     $sql = "SELECT m.id, m.name AS movie_name,  m.image, c.name AS category_name FROM Movie m
             JOIN Category c ON m.id_category = c.id
+            WHERE m.min_age <= :age
             ORDER BY c.name, m.name";
     // Prépare la requête SQL
     $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $age);
     // Exécute la requête SQL
     $stmt->execute();
     // Récupère les résultats de la requête sous forme d'objets
@@ -114,7 +116,7 @@ function addProfile($name, $avatar, $min_age){
 
 function getAllProfile(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT id, name, avatar FROM Profile";
+    $sql = "SELECT id, name, avatar, min_age FROM Profile";
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);

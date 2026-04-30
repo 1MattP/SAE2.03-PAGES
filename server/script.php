@@ -74,7 +74,7 @@ if ( isset($_REQUEST['todo']) ){
       $data = addProfileController();
       break;
     case 'readProfiles':
-      $data = getAllProfile();
+      $data = readProfileController();
       break;
 
 
