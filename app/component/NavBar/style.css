@@ -18,6 +18,10 @@
       --_offset: 0.5rem;
     }
   }
+  .navbar__div{
+    display: flex;
+    flex-direction: row;
+  }
   .navbar__list{
     display: flex;
     flex-direction: row;

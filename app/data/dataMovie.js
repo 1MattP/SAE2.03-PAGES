@@ -36,9 +36,9 @@ DataMovie.requestCategory = async function(){
     return data;
 }
 
-DataMovie.requestFeaturedMovies = async function () {
+DataMovie.requestFeaturedMovies = async function (min_age) {
 
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=readFeaturedMovies");
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readFeaturedMovies&min_age=" + min_age);
 
     let data = await answer.json();
     

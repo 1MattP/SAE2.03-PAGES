@@ -8,7 +8,7 @@ let FeaturedMovie = {};
 
 FeaturedMovie.format = function (movie) {
     let li = templateLi;
-    li = li.replaceAll('{{id}}', movie.id);
+    li = li.replaceAll('{id}', movie.id);
     li = li.replaceAll('{{name}}', movie.name);
     li = li.replaceAll('{{image}}', "../server/images/" + movie.image);
     li = li.replaceAll('{{description}}', movie.description);

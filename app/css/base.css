@@ -11,3 +11,4 @@
 @import "../component/OverlayProfile/style.css" layer(components);
 @import "../component/Favorite/style.css" layer(components);
 @import "../component/FeaturedMovie/style.css" layer(components);
+@import "../component/Stats/style.css" layer(components);

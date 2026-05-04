@@ -126,10 +126,22 @@ function removeFavoriteController() {
 }
 
 function readFeaturedMoviesController() {
-    $ok = readFeaturedMovies();
+    $min_age = $_REQUEST['min_age'];
+    $ok = readFeaturedMovies($min_age);
     if ($ok!= 0) {
         return $ok;
     } else {
         return false;
     }
+}
+
+function getStatsController() {
+    $stats = [
+        "total_profiles" => getTotalProfiles(),
+        "total_movies" => getTotalMovies(),
+        "most_favorited" => getMostFavoritedMovie(),
+        "most_popular_category" => getMostPopularCategory(),
+        "avg_favorites" => getAvgFavoritesPerProfile()
+    ];
+    return $stats;
 }

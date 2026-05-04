@@ -165,11 +165,53 @@ function removeFavorite($movie_id, $profile_id) {
  
 }
 
-function readFeaturedMovies() {
+function readFeaturedMovies($min_age) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT * FROM Movie WHERE featured = 1";
+    $sql = "SELECT * FROM Movie WHERE featured = 1 AND min_age <= :min_age";
     $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':min_age', $min_age);
     $stmt->execute();
     $res = $stmt->fetchAll(PDO::FETCH_OBJ);
     return $res;
+}
+
+
+function getTotalProfiles() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT COUNT(*) AS total FROM Profile";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function getTotalMovies() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT COUNT(*) AS total FROM Movie";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function getMostFavoritedMovie() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT m.name, COUNT(*) AS total FROM Favorite f JOIN Movie m ON f.movie_id = m.id GROUP BY f.movie_id ORDER BY total DESC LIMIT 1";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function getMostPopularCategory() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT c.name, COUNT(*) AS total FROM Favorite f JOIN Movie m ON f.movie_id = m.id JOIN Category c ON m.id_category = c.id GROUP BY c.id ORDER BY total DESC LIMIT 1";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function getAvgFavoritesPerProfile() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT AVG(total) AS moyenne FROM (SELECT COUNT(*) AS total FROM Favorite GROUP BY profile_id) AS sub";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
