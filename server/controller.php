@@ -111,3 +111,16 @@ function readFavoritesController() {
     $favorites = getFavorites($profile_id);
     return $favorites;
 }
+
+function removeFavoriteController() {
+    $movie_id = $_REQUEST['movie_id'];
+    $profile_id = $_REQUEST['profile_id'];
+
+    $ok = removeFavorite($movie_id, $profile_id);
+
+    if ($ok!= 0) {
+        return "Le film a été retiré de vos favoris.";
+    } else {
+        return false;
+    }
+}

@@ -58,10 +58,12 @@
     }
 
     C.handlerDetail = async function (id) {
-      console.log("id reçu :", id);
       let movie = await DataMovie.requestMovieDetails(id);
-      console.log("movie reçu :", movie);
       V.renderMovieDetail(movie);
+
+      let btn = document.querySelector('.favorite__btn');
+      let isFavorite = C.favorites.some(f => f.movie_id == id);
+      btn.textContent = isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris';
     };
 
 
@@ -95,11 +97,22 @@
       if (!C.currentProfileId) return;
       C.favorites = await DataFavorite.readFavorites(C.currentProfileId);
     };
-    C.handlerAddFavorite = async function (movie_id) {
-      await DataFavorite.addFavorite(movie_id, C.currentProfileId);
+    C.handlerToggleFavorite = async function (movie_id) {
+      let isFavorite = C.favorites.some(f => f.movie_id == movie_id);
+      let btn = document.querySelector('.favorite__btn');
+
+      if (isFavorite) {
+        await DataFavorite.removeFavorite(movie_id, C.currentProfileId);
+        btn.textContent = "Ajouter aux favoris";
+        alert("Le film a été retiré de vos favoris.");
+      } else {
+        await DataFavorite.addFavorite(movie_id, C.currentProfileId);
+        btn.textContent = "Retirer des favoris";
+        alert("Le film a été ajouté à vos favoris.");
+      }
+
       await C.loadFavorites();
-      alert("Le film a été ajouté à vos favoris.");
-    }
+    };
 
     C.handlerProfile = function () {
       document.querySelector('#profile').classList.remove('profile__hidden');

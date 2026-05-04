@@ -3,7 +3,7 @@
         <div class="moviedetail__title">
             <h2 class="moviedetail__name">{{name}}</h2>
             <img class="moviedetail__img" src="{{image}}" alt="img">
-            <a href="#" onclick="C.handlerAddFavorite({id})">Favorite</a>
+            <a href="#" class="favorite__btn" onclick="C.handlerToggleFavorite({id})">Ajouter aux favoris</a>
         </div>
         <div class="moviedetail__info">
             <p class="moviedetail__min_age">âge: {{min_age}}</p>

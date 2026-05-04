@@ -18,6 +18,9 @@ Favorite.format = function (favorite) {
 }
 
 Favorite.formatMany = function (favorites) {
+    if (favorites.length === 0) {
+        return '<p>Votre liste de favoris est vide</p>';
+    }
     let html = '';
     for (const favorite of favorites) {
         html += Favorite.format(favorite);
