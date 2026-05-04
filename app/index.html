@@ -11,7 +11,7 @@
 <body>
   <section id="profile" class="profile profile__hidden"></section>
   <header id="header"></header>
-
+  <section id="featured"></section>
   <section id="content"></section>
 
   <script type="module">
@@ -21,6 +21,7 @@
     import { MovieDetail } from "./component/MovieDetail/script.js";
     import { OverlayProfile } from "./component/OverlayProfile/script.js";
     import { Favorite } from "./component/Favorite/script.js";
+    import { FeaturedMovie } from "./component/FeaturedMovie/script.js";
     import { DataMovie } from "./data/dataMovie.js";
     import { DataProfile } from "./data/dataProfile.js";
     import { DataFavorite } from "./data/dataFavorite.js";
@@ -46,6 +47,7 @@
       C.getMovie();
       C.allcategory();
       C.getProfile();
+      C.getFeaturedMovies();
     };
 
     C.getMovie = async function (movie) {
@@ -117,6 +119,12 @@
     C.handlerProfile = function () {
       document.querySelector('#profile').classList.remove('profile__hidden');
     };
+
+    C.getFeaturedMovies = async function () {
+      let data = await DataMovie.requestFeaturedMovies();
+      V.renderFeaturedMovies(data);
+    };
+
     // Vue (contient tout ce qui est relatif à l'affichage)
     window.V = {};
 
@@ -155,7 +163,10 @@
       let content = document.querySelector('#content');
       content.innerHTML = Favorite.formatMany(favorite);
     }
-
+    V.renderFeaturedMovies = function (data) {
+      let content = document.querySelector('#featured');
+      content.innerHTML += FeaturedMovie.formatMany(data);
+    };
 
     C.start(); // Démarre l'application
   </script>

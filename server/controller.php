@@ -124,3 +124,12 @@ function removeFavoriteController() {
         return false;
     }
 }
+
+function readFeaturedMoviesController() {
+    $ok = readFeaturedMovies();
+    if ($ok!= 0) {
+        return $ok;
+    } else {
+        return false;
+    }
+}

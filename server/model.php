@@ -164,3 +164,12 @@ function removeFavorite($movie_id, $profile_id) {
     return $res;
  
 }
+
+function readFeaturedMovies() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT * FROM Movie WHERE featured = 1";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $res;
+}

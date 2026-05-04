@@ -36,6 +36,14 @@ DataMovie.requestCategory = async function(){
     return data;
 }
 
+DataMovie.requestFeaturedMovies = async function () {
+
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readFeaturedMovies");
+
+    let data = await answer.json();
+    
+    return data;
+};
 
 
 
