@@ -138,6 +138,22 @@
       V.renderStats(data);
     };
 
+    C.handlerSearch = async function (keyword) {
+      if (keyword === '') {
+        C.getFeaturedMovies();
+        C.allcategory();
+      } else {
+        document.querySelector('#featured').innerHTML = '';
+        let results = await DataMovie.requestSearch(keyword);
+        results = results.filter(movie => movie.min_age <= C.currentProfileAge || C.currentProfileAge === 0);
+        if (results.length === 0) {
+          document.querySelector('#content').innerHTML = '<p class="search__empty">Aucun film ne correspond à votre recherche.</p>';
+        } else {
+          V.renderMovie(results);
+        }
+      }
+    };
+
     // Vue (contient tout ce qui est relatif à l'affichage)
     window.V = {};
 

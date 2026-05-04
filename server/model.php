@@ -215,3 +215,17 @@ function getAvgFavoritesPerProfile() {
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+function searchMovies($keyword) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT m.id, m.name AS movie_name, m.image, m.min_age, c.name AS category_name 
+            FROM Movie m
+            JOIN Category c ON m.id_category = c.id
+            WHERE m.name LIKE :keyword
+            ORDER BY m.name";
+    $stmt = $cnx->prepare($sql);
+    $keyword = "%" . $keyword . "%";
+    $stmt->bindParam(':keyword', $keyword);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}

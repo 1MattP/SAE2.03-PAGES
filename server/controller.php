@@ -145,3 +145,9 @@ function getStatsController() {
     ];
     return $stats;
 }
+
+function searchMoviesController() {
+    $keyword = $_REQUEST['keyword'];
+    $movies = searchMovies($keyword);
+    return $movies;
+}

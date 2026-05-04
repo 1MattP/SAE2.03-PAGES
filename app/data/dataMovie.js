@@ -45,6 +45,15 @@ DataMovie.requestFeaturedMovies = async function (min_age) {
     return data;
 };
 
+DataMovie.requestSearch = async function(keyword) {
+
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=searchMovies&keyword=" + keyword);
+   
+    let data = await answer.json();
+
+    return data;
+};
+
 
 
 export {DataMovie};
