@@ -71,12 +71,13 @@ function readMoviesDetailController(){
 
 function addProfileController(){
 
+    $id = $_REQUEST['id'];
     $name = $_REQUEST['name'];
     $avatar = $_REQUEST['avatar'];
     $min_age = $_REQUEST['min_age'];
 
     
-    $ok = addProfile($name, $avatar, $min_age);
+    $ok = addProfile($id, $name, $avatar, $min_age);
 
     if ($ok!=0){
         return "Le Profile a bien été ajouté avec succès";

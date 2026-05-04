@@ -95,14 +95,14 @@ function getMovieDetail($id){
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
-function addProfile($name, $avatar, $min_age){
+function addProfile($id, $name, $avatar, $min_age){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
 
-    $sql = "INSERT INTO Profile (name, avatar, min_age) 
-            VALUES (:name, :avatar, :min_age)";
-
+    $sql = "REPLACE INTO Profile (id, name, avatar, min_age) 
+            VALUES (:id, :name, :avatar, :min_age)";
     $stmt = $cnx->prepare($sql);
 
+    $stmt->bindParam(':id', $id);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':avatar', $avatar);
     $stmt->bindParam(':min_age', $min_age);

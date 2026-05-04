@@ -27,6 +27,15 @@
 
     }
 
+    .addProfile__select {
+        width: 100%;
+        padding: 0.6rem 0.9rem;
+        font-size: 0.95rem;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+    }
+
     .addProfile__form select {
         cursor: pointer;
         appearance: none;

@@ -1,6 +1,10 @@
 <div class="addProfile">
-    <h4 class="addProfile__title"># Ajouter un profil</h4>
+    <h4 class="addProfile__title"># Ajouter ou modifier un profil</h4>
     <form class="addProfile__form">
+        <select class="addProfile__select" name="id">
+            <option value="0">Nouveau Profile</option>
+            {{option}}
+        </select>
         <input class="addProfile__info" required type="text" name="name" placeholder="Nom du profil">
         <input class="addProfile__info" type="text" name="avatar" placeholder="Icon d'avatar">
         <input class="addProfile__info" required type="number" name="min_age" placeholder="âge recquis">

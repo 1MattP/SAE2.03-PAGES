@@ -2,14 +2,32 @@ const HOST_URL = "https://mmi.unilim.fr/~pages39/SAE2.03-PAGES";
 
 let DataProfile = {};
 
-DataProfile.add = async function(fdata) {
+DataProfile.add = async function (fdata) {
     let config = {
-        method: "POST", 
+        method: "POST",
         body: fdata
     };
     let answer = await fetch(HOST_URL + "/server/script.php?todo=addProfile", config);
     let data = await answer.json();
     return data;
 };
+
+DataProfile.read = async function () {
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=readProfiles");
+    let data = await answer.json();
+    return data;
+}
+
+// DataUpdateProfile.update = async function (fdata) {
+//     let config = {
+//         method: "POST", 
+//         body: fdata 
+//     };
+//     let answer = await fetch(HOST_URL + "/server/script.php?todo=updateProfile", config);
+//     let data = await answer.json();
+//     return data;
+// }
+
+
 
 export { DataProfile }; 
