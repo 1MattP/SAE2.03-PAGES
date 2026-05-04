@@ -13,10 +13,13 @@ let MovieCategory = {};
 MovieCategory.format = function (category) {
     let li = templateLi;
     li = li.replaceAll('{{category}}', category.name);
-    if (category.movies) {
+    if (category.movies && category.movies.length > 0) {
         let moviesHTML = Movie.formatMany(category.movies);
         li = li.replace('{{movies}}', moviesHTML);
+    } else {
+        li = li.replace('{{movies}}', '<p class="category__empty">Aucun film disponible pour votre tranche d\'âge.</p>');
     }
+
 
     return li;
 }

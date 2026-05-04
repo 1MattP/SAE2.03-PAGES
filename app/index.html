@@ -20,9 +20,10 @@
     import { MovieCategory } from "./component/MovieCategory/script.js";
     import { MovieDetail } from "./component/MovieDetail/script.js";
     import { OverlayProfile } from "./component/OverlayProfile/script.js";
-
+    import { Favorite } from "./component/Favorite/script.js";
     import { DataMovie } from "./data/dataMovie.js";
     import { DataProfile } from "./data/dataProfile.js";
+    import { DataFavorite } from "./data/dataFavorite.js";
 
     // Controleur
     // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -30,12 +31,18 @@
     window.C = {};
 
     C.handlerAbout = function () {
-      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()");
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", "C.handlerFavorite()");
       C.allcategory();
     };
 
+    C.favorites = [];
+    C.handlerFavorite = async function () {
+      await C.loadFavorites();
+      V.renderFavorite(C.favorites);
+    }
+
     C.start = function () {
-      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()");
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", "C.handlerFavorite()");
       C.getMovie();
       C.allcategory();
       C.getProfile();
@@ -51,7 +58,9 @@
     }
 
     C.handlerDetail = async function (id) {
+      console.log("id reçu :", id);
       let movie = await DataMovie.requestMovieDetails(id);
+      console.log("movie reçu :", movie);
       V.renderMovieDetail(movie);
     };
 
@@ -67,19 +76,30 @@
 
     C.getProfile = async function () {
       let data = await DataProfile.read();
-      
+
       V.renderOverlayProfile(data);
       document.querySelector('#profile').classList.remove('profile__hidden');
     };
     C.currentProfileAge = 0;
-    C.selectProfile = function (profilname, min_age) {
+    C.currentProfileId = null;
+    C.selectProfile = function (profile_id, profilname, min_age) {
       C.currentProfileAge = min_age;
+      C.currentProfileId = profile_id;
       document.querySelector('#profile').classList.add('profile__hidden');
       console.log("Profil sélectionné :", profilname, "âge:", min_age);
 
-      C.getMovie();
+      C.loadFavorites();
       C.allcategory();
     };
+    C.loadFavorites = async function () {
+      if (!C.currentProfileId) return;
+      C.favorites = await DataFavorite.readFavorites(C.currentProfileId);
+    };
+    C.handlerAddFavorite = async function (movie_id) {
+      await DataFavorite.addFavorite(movie_id, C.currentProfileId);
+      await C.loadFavorites();
+      alert("Le film a été ajouté à vos favoris.");
+    }
 
     C.handlerProfile = function () {
       document.querySelector('#profile').classList.remove('profile__hidden');
@@ -95,9 +115,9 @@
      * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
      * formaté par le composant NavBar.
      */
-    V.renderNavBar = function (hAbout, hProfile) {
+    V.renderNavBar = function (hAbout, hProfile, hFavorite) {
       let header = document.querySelector("#header");
-      header.innerHTML = NavBar.format(hAbout, hProfile);
+      header.innerHTML = NavBar.format(hAbout, hProfile, hFavorite);
     };
     V.renderMovie = function (allmovie) {
       let content = document.querySelector('#content');
@@ -117,6 +137,10 @@
       content.innerHTML = OverlayProfile.formatMany(allprofil);
 
 
+    }
+    V.renderFavorite = function (favorite) {
+      let content = document.querySelector('#content');
+      content.innerHTML = Favorite.formatMany(favorite);
     }
 
 

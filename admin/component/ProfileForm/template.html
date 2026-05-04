@@ -1,7 +1,7 @@
 <div class="addProfile">
     <h4 class="addProfile__title"># Ajouter ou modifier un profil</h4>
     <form class="addProfile__form">
-        <select class="addProfile__select" name="id">
+        <select class="addProfile__select" name="id" onchange="C.handlerSelectProfile(this.value)">
             <option value="0">Nouveau Profile</option>
             {{option}}
         </select>

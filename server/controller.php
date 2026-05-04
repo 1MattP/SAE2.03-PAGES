@@ -91,3 +91,23 @@ function readProfileController(){
     $profiles = getAllProfile();
     return $profiles;
 }
+
+function addFavoriteController() {
+    $movie_id = $_REQUEST['movie_id'];
+    $profile_id = $_REQUEST['profile_id'];
+
+    $ok = addFavorite($movie_id, $profile_id);
+
+    if ($ok!=0) {
+        return "Le film a été ajouté à vos favoris.";
+    } 
+    else {
+        return false;
+    }
+}
+
+function readFavoritesController() {
+    $profile_id = $_REQUEST['profile_id'];
+    $favorites = getFavorites($profile_id);
+    return $favorites;
+}

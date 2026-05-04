@@ -8,6 +8,7 @@ let OverlayProfile = {};
 
 OverlayProfile.format = function(profile){
     let li = templateLi;
+    li = li.replaceAll('{{id}}', profile.id);
     li = li.replaceAll('{{img}}', "../server/images/profiles/" + profile.avatar);
     li = li.replaceAll('{{name}}', profile.name);
     li = li.replaceAll('{{profilname}}', profile.name);
