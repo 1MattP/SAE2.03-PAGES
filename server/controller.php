@@ -164,3 +164,27 @@ function  UpdateFeaturedController() {
     }
 
 }
+
+function addRatingController() {
+    $movie_id = $_REQUEST['movie_id'];
+    $profile_id = $_REQUEST['profile_id'];
+    $rating = $_REQUEST['rating'];
+
+    $ok = addRating($movie_id, $profile_id, $rating);
+    if ($ok!=0) {
+        return "Votre note a été enregistrée.";
+    } else {
+        return false;
+    }
+}
+
+function getRatingController() {
+    $movie_id = $_REQUEST['movie_id'];
+    $profile_id = $_REQUEST['profile_id'];
+    return getRating($movie_id, $profile_id);
+}
+
+function getAvgRatingController() {
+    $movie_id = $_REQUEST['movie_id'];
+    return getAvgRating($movie_id);
+}

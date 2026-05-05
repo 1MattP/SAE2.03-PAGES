@@ -241,3 +241,39 @@ function UpdateFeatured($movie_id, $featured){
     
     return $res;
 }
+
+function addRating($movie_id, $profile_id, $rating) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Rating (movie_id, profile_id, rating) 
+            VALUES (:movie_id, :profile_id, :rating)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':movie_id', $movie_id);
+    $stmt->bindParam(':profile_id', $profile_id);
+    $stmt->bindParam(':rating', $rating);
+    $stmt->execute();
+    $res = $stmt->rowCount();
+
+    return $res;
+}
+
+function getRating($movie_id, $profile_id) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT rating FROM Rating 
+            WHERE movie_id = :movie_id AND profile_id = :profile_id";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':movie_id', $movie_id);
+    $stmt->bindParam(':profile_id', $profile_id);
+    $stmt->execute();
+    $res = $stmt->fetch(PDO::FETCH_OBJ);
+    return $res !== false ? $res : null;
+}
+
+function getAvgRating($movie_id) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT ROUND(AVG(rating), 1) AS avg_rating, COUNT(*) AS total 
+            FROM Rating WHERE movie_id = :movie_id";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':movie_id', $movie_id);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}

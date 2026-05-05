@@ -23,6 +23,8 @@
     import { Favorite } from "./component/Favorite/script.js";
     import { FeaturedMovie } from "./component/FeaturedMovie/script.js";
     import { Stats } from "./component/Stats/script.js";
+    import { Rating } from "./component/Rating/script.js";
+    import { DataRating } from "./data/dataRating.js";
     import { DataStats } from "./data/dataStats.js";
     import { DataMovie } from "./data/dataMovie.js";
     import { DataProfile } from "./data/dataProfile.js";
@@ -72,7 +74,11 @@
       let checkbox = document.querySelector('.favorite__btn');
       let Favorite = C.favorites.some(f => f.movie_id == id);
       checkbox.checked = Favorite;
+
+      await Rating.init(id, C.currentProfileId, DataRating);
     };
+
+
 
 
     C.allcategory = async function () {
@@ -151,6 +157,13 @@
           V.renderMovie(results);
         }
       }
+    };
+    C.handlerRating = async function (movie_id, value) {
+
+      let existing = await DataRating.getRating(movie_id, C.currentProfileId);
+      await DataRating.addRating(movie_id, C.currentProfileId, value);
+      alert("Votre note a été enregistrée.");
+      await Rating.init(movie_id, C.currentProfileId, DataRating);
     };
 
     // Vue (contient tout ce qui est relatif à l'affichage)

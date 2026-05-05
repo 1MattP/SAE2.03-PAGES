@@ -1,11 +1,16 @@
+import { Rating } from "../Rating/script.js";
+
 let templateFile = await fetch("./component/MovieDetail/template.html");
 let template = await templateFile.text();
 
 let MovieDetail = {};
 
-MovieDetail.format = function(moviedetail){
+MovieDetail.format = function (moviedetail) {
     let html = template;
-    
+
+    let RatingHTML = Rating.format(moviedetail.id)
+    html = html.replaceAll('{{rating}}', RatingHTML)
+
     html = html.replaceAll('{id}', moviedetail.id);
     html = html.replaceAll('{{name}}', moviedetail.movie_name);
     html = html.replaceAll('{{image}}', "../server/images/" + moviedetail.image);
@@ -15,10 +20,10 @@ MovieDetail.format = function(moviedetail){
     html = html.replaceAll('{{min_age}}', moviedetail.min_age);
     html = html.replaceAll('{{id_category}}', moviedetail.category_name);
     html = html.replaceAll('{{trailer}}', moviedetail.trailer);
-    
+
 
     return html;
 }
 
-export {MovieDetail};
+export { MovieDetail };
 

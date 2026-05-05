@@ -12,3 +12,4 @@
 @import "../component/Favorite/style.css" layer(components);
 @import "../component/FeaturedMovie/style.css" layer(components);
 @import "../component/Stats/style.css" layer(components);
+@import "../component/Rating/style.css" layer(components);
