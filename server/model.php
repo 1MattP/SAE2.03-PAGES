@@ -295,10 +295,44 @@ function getComments($movie_id) {
     $sql = "SELECT c.id, c.content, c.date, p.name AS profile_name
             FROM Comment c
             JOIN Profile p ON c.profile_id = p.id
-            WHERE c.movie_id = :movie_id
+            WHERE c.movie_id = :movie_id AND c.approved = 1
             ORDER BY c.date";
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':movie_id', $movie_id);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+
+function getPendingComments() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT c.id, c.content, c.date, c.approved, p.name AS profile_name, m.name AS movie_name
+            FROM Comment c
+            JOIN Profile p ON c.profile_id = p.id
+            JOIN Movie m ON c.movie_id = m.id
+            ORDER BY c.date ";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+
+function approveComment($id) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "UPDATE Comment SET approved = 1 WHERE id = :id";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $res = $stmt->rowCount();
+    return $res;
+}
+
+function deleteComment($id) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "DELETE FROM Comment WHERE id = :id";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $res = $stmt->rowCount();
+    return $res;
 }

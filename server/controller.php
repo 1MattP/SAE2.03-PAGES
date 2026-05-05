@@ -203,5 +203,31 @@ function addCommentController() {
 
 function getCommentsController() {
     $movie_id = $_REQUEST['movie_id'];
-    return getComments($movie_id);
+    $ok =  getComments($movie_id);
+    return $ok;
+}
+
+function getPendingCommentsController() {
+    $ok = getPendingComments();
+    return $ok;
+}
+
+function approveCommentController() {
+    $id = $_REQUEST['id'];
+    $ok = approveComment($id);
+    if ($ok!= 0) {
+        return "Le commentaire a été approuvé avec succès.";
+    } else {
+        return false;
+    }
+}
+
+function deleteCommentController() {
+    $id = $_REQUEST['id'];
+    $ok = deleteComment($id);
+    if ($ok!= 0) {
+        return "Le commentaire a été supprimé avec succès.";
+    } else {
+        return false;
+    }
 }

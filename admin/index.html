@@ -13,12 +13,15 @@
   <section id="MovieForm"></section>
   <section id="ProfileForm"></section>
   <section id="FeaturedForm"></section>
+  <section id="CommentAdmin"></section>
 
   <script type="module">
     import { Log } from "./component/Log/script.js";
     import { MovieForm } from "./component/MovieForm/script.js";
     import { ProfileForm } from "./component/ProfileForm/script.js";
     import { FeaturedForm } from "./component/FeaturedForm/script.js";
+    import { CommentAdmin } from "./component/CommentAdmin/script.js";
+    import { DataComment } from "./data/dataComment.js";
     import { DataProfile } from "./data/dataProfile.js"
     import { DataMovie } from "./data/dataMovie.js"
 
@@ -58,6 +61,7 @@
       C.getCategory();
       C.getProfile();
       V.renderFeaturedForm([]);
+      C.getComments()
 
     };
 
@@ -115,6 +119,23 @@
       V.renderFeaturedForm(C.currentSearchResults);
     };
 
+    C.getComments = async function () {
+      let data = await DataComment.getPending();
+      V.renderCommentAdmin(data);
+    };
+
+    C.handlerApproveComment = async function (id) {
+      let res = await DataComment.approve(id);
+      V.renderLog(res);
+      C.getComments();
+    };
+
+    C.handlerDeleteComment = async function (id) {
+      let res = await DataComment.delete(id);
+      V.renderLog(res);
+      C.getComments();
+    };
+
 
     window.V = {};
 
@@ -135,6 +156,11 @@
       let content = document.querySelector("#FeaturedForm");
       content.innerHTML = FeaturedForm.formatMany(data);
     }
+
+    V.renderCommentAdmin = function (data) {
+      let content = document.querySelector("#CommentAdmin");
+      content.innerHTML = CommentAdmin.formatMany(data);
+    };
 
 
 
