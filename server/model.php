@@ -277,3 +277,28 @@ function getAvgRating($movie_id) {
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_OBJ);
 }
+
+function addComment($movie_id, $profile_id, $content) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "INSERT INTO Comment (movie_id, profile_id, content) 
+            VALUES (:movie_id, :profile_id, :content)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':movie_id', $movie_id);
+    $stmt->bindParam(':profile_id', $profile_id);
+    $stmt->bindParam(':content', $content);
+    $stmt->execute();
+    return $stmt->rowCount();
+}
+
+function getComments($movie_id) {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT c.id, c.content, c.date, p.name AS profile_name
+            FROM Comment c
+            JOIN Profile p ON c.profile_id = p.id
+            WHERE c.movie_id = :movie_id
+            ORDER BY c.date";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':movie_id', $movie_id);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}

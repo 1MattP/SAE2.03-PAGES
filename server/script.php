@@ -106,6 +106,12 @@ if ( isset($_REQUEST['todo']) ){
     case 'getAvgRating':
       $data = getAvgRatingController();
       break;
+    case 'addComment':
+      $data = addCommentController();
+      break;
+    case 'getComments':
+      $data = getCommentsController();
+      break;
 
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
       echo json_encode('[error] Unknown todo value');

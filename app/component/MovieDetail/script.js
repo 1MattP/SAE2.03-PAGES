@@ -1,4 +1,5 @@
 import { Rating } from "../Rating/script.js";
+import { Comment } from "../Comment/script.js";
 
 let templateFile = await fetch("./component/MovieDetail/template.html");
 let template = await templateFile.text();
@@ -10,6 +11,9 @@ MovieDetail.format = function (moviedetail) {
 
     let RatingHTML = Rating.format(moviedetail.id)
     html = html.replaceAll('{{rating}}', RatingHTML)
+
+    let CommentHTML = Comment.formatComment(moviedetail.id)
+    html = html.replaceAll('{{comment}}', CommentHTML)
 
     html = html.replaceAll('{id}', moviedetail.id);
     html = html.replaceAll('{{name}}', moviedetail.movie_name);

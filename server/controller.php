@@ -188,3 +188,20 @@ function getAvgRatingController() {
     $movie_id = $_REQUEST['movie_id'];
     return getAvgRating($movie_id);
 }
+
+function addCommentController() {
+    $movie_id = $_REQUEST['movie_id'];
+    $profile_id = $_REQUEST['profile_id'];
+    $content = $_REQUEST['content'];
+    $ok = addComment($movie_id, $profile_id, $content);
+    if ($ok!= 0) {
+        return "Votre commentaire a été enregistré.";
+    } else {
+        return false;
+    }
+}
+
+function getCommentsController() {
+    $movie_id = $_REQUEST['movie_id'];
+    return getComments($movie_id);
+}

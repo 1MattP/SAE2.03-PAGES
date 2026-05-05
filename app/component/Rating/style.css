@@ -20,7 +20,7 @@
     color: #555;
     cursor: pointer;
     transition: color 0.15s ease, transform 0.1s ease;
-    user-select: none;
+
 }
 
 .rating__star:hover,
@@ -34,7 +34,6 @@
 }
 
 .rating__star--disabled {
-    pointer-events: none;
     color: #888;
 }
 
