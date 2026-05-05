@@ -3,7 +3,11 @@
         <div class="moviedetail__title">
             <h2 class="moviedetail__name">{{name}}</h2>
             <img class="moviedetail__img" src="{{image}}" alt="img">
-            <a href="#" class="favorite__btn" onclick="C.handlerToggleFavorite({id})">Ajouter aux favoris</a>
+            <label class="favorite__label">
+                <input type="checkbox" class="favorite__btn" onchange="C.handlerToggleFavorite({id})" />
+                <span class="favorite__add">Ajouter aux favoris</span>
+                <span class="favorite__remove">Retirer des favoris</span>
+            </label>
         </div>
         <div class="moviedetail__info">
             <p class="moviedetail__min_age">âge: {{min_age}}</p>

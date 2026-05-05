@@ -151,3 +151,16 @@ function searchMoviesController() {
     $movies = searchMovies($keyword);
     return $movies;
 }
+
+function  UpdateFeaturedController() {
+    $movie_id = $_REQUEST['movie_id'];
+    $featured = $_REQUEST['featured'];
+
+    $ok = UpdateFeatured($movie_id, $featured);
+    if ($ok!=0){
+        return "Le statut du film a été mis à jour avec succès";
+    } else {
+        return false;
+    }
+
+}

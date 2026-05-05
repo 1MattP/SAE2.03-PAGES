@@ -1,0 +1,11 @@
+.favorite__remove {
+    display: none;
+}
+
+.favorite__label:has(.favorite__btn:checked) .favorite__add {
+    display: none;
+}
+
+.favorite__label:has(.favorite__btn:checked) .favorite__remove {
+    display: inline;
+}

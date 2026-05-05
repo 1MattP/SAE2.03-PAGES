@@ -126,7 +126,6 @@ function getAllProfile(){
 
 function addFavorite($movie_id, $profile_id) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-
     $sql = "INSERT INTO Favorite (movie_id, profile_id) VALUES (:movie_id, :profile_id)";
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':movie_id', $movie_id);
@@ -218,7 +217,7 @@ function getAvgFavoritesPerProfile() {
 
 function searchMovies($keyword) {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT m.id, m.name AS movie_name, m.image, m.min_age, c.name AS category_name 
+    $sql = "SELECT m.id, m.name AS movie_name, m.image, m.min_age,m.featured, c.name AS category_name 
             FROM Movie m
             JOIN Category c ON m.id_category = c.id
             WHERE m.name LIKE :keyword
@@ -228,4 +227,17 @@ function searchMovies($keyword) {
     $stmt->bindParam(':keyword', $keyword);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function UpdateFeatured($movie_id, $featured){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "UPDATE Movie SET featured = :featured WHERE id = :movie_id";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':featured', $featured);
+    $stmt->bindParam(':movie_id', $movie_id);
+    $stmt->execute();
+    $res = $stmt->rowCount();
+    
+    return $res;
 }

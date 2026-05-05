@@ -69,9 +69,9 @@
       let movie = await DataMovie.requestMovieDetails(id);
       V.renderMovieDetail(movie);
 
-      let btn = document.querySelector('.favorite__btn');
-      let isFavorite = C.favorites.some(f => f.movie_id == id);
-      btn.textContent = isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris';
+      let checkbox = document.querySelector('.favorite__btn');
+      let Favorite = C.favorites.some(f => f.movie_id == id);
+      checkbox.checked = Favorite;
     };
 
 
@@ -106,22 +106,21 @@
       if (!C.currentProfileId) return;
       C.favorites = await DataFavorite.readFavorites(C.currentProfileId);
     };
-    C.handlerToggleFavorite = async function (movie_id) {
-      let isFavorite = C.favorites.some(f => f.movie_id == movie_id);
-      let btn = document.querySelector('.favorite__btn');
 
-      if (isFavorite) {
+
+    C.handlerToggleFavorite = async function (movie_id) {
+      let Favorite = C.favorites.some(f => f.movie_id == movie_id);
+      if (Favorite) {
         await DataFavorite.removeFavorite(movie_id, C.currentProfileId);
-        btn.textContent = "Ajouter aux favoris";
         alert("Le film a été retiré de vos favoris.");
       } else {
         await DataFavorite.addFavorite(movie_id, C.currentProfileId);
-        btn.textContent = "Retirer des favoris";
         alert("Le film a été ajouté à vos favoris.");
       }
 
       await C.loadFavorites();
     };
+
 
     C.handlerProfile = function () {
       document.querySelector('#profile').classList.remove('profile__hidden');

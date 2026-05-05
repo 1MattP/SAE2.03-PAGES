@@ -12,11 +12,13 @@
   <section id="log"></section>
   <section id="MovieForm"></section>
   <section id="ProfileForm"></section>
+  <section id="FeaturedForm"></section>
 
   <script type="module">
     import { Log } from "./component/Log/script.js";
     import { MovieForm } from "./component/MovieForm/script.js";
     import { ProfileForm } from "./component/ProfileForm/script.js";
+    import { FeaturedForm } from "./component/FeaturedForm/script.js";
     import { DataProfile } from "./data/dataProfile.js"
     import { DataMovie } from "./data/dataMovie.js"
 
@@ -55,6 +57,7 @@
       V.renderLog("Démarrage de l'application");
       C.getCategory();
       C.getProfile();
+      V.renderFeaturedForm([]);
 
     };
 
@@ -83,6 +86,36 @@
       form.querySelector('[name="min_age"]').value = profile.min_age;
     };
 
+    C.handlerSearchFeatured = async function () {
+      let input = document.querySelector("#search-input");
+      let keyword = input.value;
+
+      if (keyword === '') return;
+      let results = await DataMovie.requestSearch(keyword);
+
+      C.currentSearchResults = results;
+      V.renderFeaturedForm(results);
+    };
+    C.handlerFeatured = async function (id) {
+
+      let movie = C.currentSearchResults.find(m => m.id == id);
+      if (!movie) return;
+
+      let newFeaturedStatus;
+
+      if (movie.featured == 1) {
+        newFeaturedStatus = 0;
+      } else {
+        newFeaturedStatus = 1;
+      }
+
+      let res = await DataMovie.UpdateFeatured(id, newFeaturedStatus);
+      V.renderLog(res);
+      movie.featured = newFeaturedStatus;
+      V.renderFeaturedForm(C.currentSearchResults);
+    };
+
+
     window.V = {};
 
     V.renderLog = function (txt) {
@@ -98,6 +131,10 @@
       let content = document.querySelector("#ProfileForm");
       content.innerHTML = ProfileForm.formatMany(data);
     };
+    V.renderFeaturedForm = function (data) {
+      let content = document.querySelector("#FeaturedForm");
+      content.innerHTML = FeaturedForm.formatMany(data);
+    }
 
 
 
