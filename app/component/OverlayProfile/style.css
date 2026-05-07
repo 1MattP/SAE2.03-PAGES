@@ -1,26 +1,27 @@
 .profile {
   position: fixed;
   inset: 0;
-  background-color: rgba(255, 255, 255);
-
+  z-index: 10;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 
-
   .overlayprofile__list {
     display: flex;
     flex-direction: row;
-    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0 1rem;
   }
 
   .OverlayProfile__avatar {
     border-radius: 1rem;
-    width: 6.25rem;
-    height: 6.25rem;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
+    width: 6rem;
+    height: 6rem;
   }
 
   .OverlayProfile__profiles {
@@ -28,10 +29,40 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
-  .OverlayProfile__profiles:hover {
-    transform: translateY(-5px);
+  .overlayprofile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .overlayprofile__name {
+    font-size: 2.5rem;
+  }
+
+  @media (min-width: 44rem) {
+    .overlayprofile__name {
+      font-size: 5rem;
+    }
+
+    .overlayprofile__list {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 2rem;
+      padding: 0;
+    }
+
+    .OverlayProfile__avatar {
+      width: 8rem;
+      height: 8rem;
+    }
   }
 }
 

@@ -13,7 +13,7 @@ OverlayProfile.format = function(profile){
     li = li.replaceAll('{{name}}', profile.name);
     li = li.replaceAll('{{profilname}}', profile.name);
     li = li.replaceAll('{{min_age}}', profile.min_age);
-
+    console.log(li);
     return li;
 }
 

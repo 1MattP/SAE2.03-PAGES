@@ -13,25 +13,21 @@ let MovieCategory = {};
 MovieCategory.format = function (category) {
     let li = templateLi;
     li = li.replaceAll('{{category}}', category.name);
-    if (category.movies && category.movies.length > 0) {
-        let moviesHTML = Movie.formatMany(category.movies);
-        li = li.replace('{{movies}}', moviesHTML);
-    } else {
-        li = li.replace('{{movies}}', '<p class="category__empty">Aucun film disponible pour votre tranche d\'âge.</p>');
-    }
-
-
     return li;
 }
 
 MovieCategory.formatMany = function (categories) {
     let html = '';
-    for (const movie of categories) {
-        html += MovieCategory.format(movie);
+    for (const category of categories) {
+        html += MovieCategory.format(category);
     }
-
     return template.replaceAll('{{categoryList}}', html);
 }
+
+
+
+
+
 
 export { MovieCategory };
 

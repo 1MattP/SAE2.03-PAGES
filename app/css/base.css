@@ -13,3 +13,4 @@
 @import "../component/FeaturedMovie/style.css" layer(components);
 @import "../component/Stats/style.css" layer(components);
 @import "../component/Rating/style.css" layer(components);
+@import "../component/Comment/style.css" layer(components);

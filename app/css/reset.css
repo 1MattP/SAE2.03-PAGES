@@ -9,3 +9,10 @@ ul {
   margin: 0;
   list-style: none;
 }
+
+body,
+
+.body{
+  margin: 0;
+  background-color: var( --color-bg);
+}

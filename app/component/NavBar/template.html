@@ -1,13 +1,60 @@
 <nav class="navbar font-sans">
+  <input type="checkbox" id="burger-toggle" class="navbar__burger-toggle" />
+
   <ul class="navbar__list">
-    <div class="navbar__div">
+    <div class="navbar__left">
+      <svg width="100" height="50" viewBox="0 32 300 70" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <mask id="cut">
+            <rect width="100" height="100" fill="white" />
+            <polygon points="40,30 70,50 40,70" fill="black" />
+            <path d="M30 25 Q50 10 70 25" stroke="black" stroke-width="4" fill="none" stroke-linecap="round" />
+            <path d="M30 75 Q50 90 70 75" stroke="black" stroke-width="4" fill="none" stroke-linecap="round" />
+            <circle cx="50" cy="50" r="6" fill="black" />
+          </mask>
+        </defs>
+        <rect x="0" y="0" width="100" height="100" rx="20" fill="#FFD400" mask="url(#cut)" />
+        <text x="110" y="95" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="bold" fill="#FFD400">
+          streamo
+        </text>
+      </svg>
       <li class="navbar__item" onclick="{{hAbout}}">Film</li>
       <li class="navbar__item" onclick="{{hFavorite}}">Favori</li>
       <li class="navbar__item" onclick="{{hStat}}">Statistiques</li>
     </div>
-    <div class="navbar__search">
-      <input type="text" id="search-input" placeholder="Rechercher un film..." onkeyup="C.handlerSearch(this.value)" />
+
+    <div class="navbar__right">
+      <div class="navbar__search">
+        <input type="checkbox" id="search-toggle" class="navbar__search-toggle" />
+        <label for="search-toggle" class="navbar__search-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C12.8487 19 14.551 18.3729 15.9056 17.3199L19.2929 20.7071C19.6834 21.0976 20.3166 21.0976 20.7071 20.7071C21.0976 20.3166 21.0976 19.6834 20.7071 19.2929L17.3199 15.9056C18.3729 14.551 19 12.8487 19 11C19 6.58172 15.4183 3 11 3ZM5 11C5 7.68629 7.68629 5 11 5C14.3137 5 17 7.68629 17 11C17 14.3137 14.3137 17 11 17C7.68629 17 5 14.3137 5 11Z"
+              fill="#ffffff" />
+          </svg>
+        </label>
+        <input type="text" id="search-input" class="navbar__search-input" placeholder="Rechercher un film..."
+          onkeyup="C.handlerSearch(this.value)" />
+      </div>
+
+      <li class="navbar__item navbar__profile" onclick="{{hProfile}}">
+        <img class="navbar__profile-icon" src="{{profileImage}}" alt="profil">
+        <span class="navbar__profile-name">{{profileName}}</span>
+      </li>
+
+      <label for="burger-toggle" class="navbar__burger">
+        <svg viewBox="0 0 32 32" width="24" height="24" class="burger__svg">
+          <line class="burger__line" x1="2" y1="7" x2="30" y2="7" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+          <line class="burger__line" x1="2" y1="16" x2="30" y2="16" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+          <line class="burger__line" x1="2" y1="25" x2="30" y2="25" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+        </svg>
+      </label>
     </div>
-    <li class="navbar__item" onclick="{{hProfile}}">Changer de profil</li>
   </ul>
+
+  <div class="navbar__mobile-menu">
+    <li class="navbar__mobile-item" onclick="{{hAbout}}">Film</li>
+    <li class="navbar__mobile-item" onclick="{{hFavorite}}">Favori</li>
+    <li class="navbar__mobile-item" onclick="{{hStat}}">Statistiques</li>
+  </div>
 </nav>

@@ -15,6 +15,9 @@ FeaturedMovie.format = function (movie) {
     return li;
 };
 
+
+
+
 FeaturedMovie.formatMany = function (movies) {
     if (movies.length === 0) {
         return '<p>Aucun film mis en avant pour le moment.</p>';
@@ -23,7 +26,10 @@ FeaturedMovie.formatMany = function (movies) {
     for (const movie of movies) {
         html += FeaturedMovie.format(movie);
     }
+
     return template.replaceAll('{{featuredList}}', html);
 };
+
+
 
 export { FeaturedMovie };

@@ -1,29 +1,116 @@
 .category {
-  margin: 0 auto;
-  padding: 20px;
-  background: #f7f7f8;
+  padding: 1.5rem 2rem;
+  background: var(--color-bg);
 
-  .category__list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .category__content {
-    background: white;
-    border: 1px solid #e6e6e6;
-    border-radius: 0.6rem;
-    padding: 1rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-  }
-
-
-  .category_title {
-    margin: 0 0 0.6rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #222;
-    border-left: 3px solid #d0d0d0;
-    padding-left: 0.6rem;
-  }
+  .category__title {
+  color: var(--color-fg);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  margin-top: 0;
 }
+
+.category__list {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.category__card {
+  scroll-snap-align: start;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  height: 6.25rem;
+  width: 11.75rem;
+  flex: 0 0 11.75rem;
+  transition: filter 0.2s ease;
+
+  &:hover {
+    filter: brightness(0.75);
+  }
+
+
+}
+.category__card:nth-child(1) {
+  background: linear-gradient(135deg, #5f0a0a, #9c1c3c);
+}
+
+.category__card:nth-child(2) {
+  background: linear-gradient(135deg, #2d1b4e, #6b3fa0);
+}
+
+.category__card:nth-child(3) {
+  background: linear-gradient(135deg, #0a3d2e, #0f7b6c);
+}
+
+.category__card:nth-child(4) {
+  background: linear-gradient(135deg, #0a3a4e, #0f6c7b);
+}
+
+.category__card:nth-child(5) {
+  background: linear-gradient(135deg, #3a0a4e, #7b0f6c);
+}
+
+.category__card:nth-child(6) {
+  background: linear-gradient(135deg, #4e2a0a, #b85c1c);
+}
+
+.category__card:nth-child(7) {
+  background: linear-gradient(135deg, #0a1f4e, #1c5bb8);
+}
+
+.category__card:nth-child(8) {
+  background: linear-gradient(135deg, #4e0a2f, #b81c5c);
+}
+
+.category__card:nth-child(9) {
+  background: linear-gradient(135deg, #0a4e45, #1cb8a0);
+}
+
+.category__card:nth-child(10) {
+  background: linear-gradient(135deg, #1a0a4e, #5c1cb8);
+}
+}
+
+
+
+.category__container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nav-btn {
+  position: absolute;
+  z-index: 8;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-text); 
+  color: var(--color-bg);
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.nav-btn:hover {
+  transform: scale(1.1);
+}
+
+.nav-btn.prev {
+  left: -10px; 
+}
+
+.nav-btn.next {
+  right: -10px;
+}
+
+

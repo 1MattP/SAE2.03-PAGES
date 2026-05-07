@@ -1,31 +1,202 @@
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 3rem;
+  position: fixed;
+  z-index: 7;
+  padding: 0.5rem 1rem;
   color: var(--color-fg);
-  background-color: var(--color-bg);
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(15px);
 
-  .navbar__item {
-    --_offset: 0.2rem;
-    padding: 0.5rem 1rem;
-    text-decoration: underline;
-    text-decoration-thickness: 0.1rem;
-    text-underline-offset: var(--_offset);
-    cursor: pointer;
-    transition: text-underline-offset 0.2s ease-in-out;
-    &:hover {
-      --_offset: 0.5rem;
-    }
+  .navbar__burger-toggle {
+    display: none;
   }
-  .navbar__div{
-    display: flex;
-    flex-direction: row;
-  }
-  .navbar__list{
+
+  .navbar__list {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100%;
+    align-items: center;
+    padding: 0.25rem 1rem 0.5rem;
+    gap: 1rem;
+  }
+
+  .navbar__left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .navbar__left .navbar__item {
+    display: none;
+  }
+
+  .navbar__right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .navbar__item {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+
+    &:hover {
+      color: var(--color-text-secondary);
+    }
+  }
+
+  .navbar__search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .navbar__search-toggle {
+    display: none;
+  }
+
+  .navbar__search-icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--color-bg-comment);
+    }
+  }
+
+  .navbar__search-input {
+    width: 0;
+    opacity: 0;
+    padding: 0;
+    border: none;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    background: var(--color-bg-comment);
+    border-radius: 1.25rem;
+    color: var(--color-fg_secondary);
+    font-size: 0.9rem;
+
+    &::placeholder {
+      color: var(--color-fg_secondary, 0.5);
+    }
+  }
+
+  .navbar__search-toggle:checked ~ .navbar__search-input {
+    width: 9.375rem;
+    opacity: 1;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .navbar__profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .navbar__profile-icon {
+    width: 1.56rem;
+    height: 1.56rem;
+    border-radius: 0.25rem;
+    object-fit: cover;
+  }
+
+  .navbar__profile-name {
+    display: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .navbar__burger {
+    display: block;
+    cursor: pointer;
+    color: var(--color-fg);
+
+    .burger__line {
+      transition: opacity 0.3s, translate 0.3s, rotate 0.3s;
+      transition-delay: 0.3s, 0.15s, 0s;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+  }
+
+  .navbar__burger-toggle:checked ~ .navbar__list .navbar__burger .burger__line:nth-child(1) {
+    translate: 0 9px;
+    rotate: 45deg;
+    transition-delay: 0s, 0.15s, 0.3s;
+  }
+
+  .navbar__burger-toggle:checked ~ .navbar__list .navbar__burger .burger__line:nth-child(2) {
+    opacity: 0;
+    transition-delay: 0s, 0.15s, 0.3s;
+  }
+
+  .navbar__burger-toggle:checked ~ .navbar__list .navbar__burger .burger__line:nth-child(3) {
+    translate: 0 -9px;
+    rotate: -45deg;
+    transition-delay: 0s, 0.15s, 0.3s;
+  }
+
+  .navbar__mobile-menu {
+    display: none;
+    flex-direction: column;
+    padding: 0.5rem 2rem 1rem;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  .navbar__burger-toggle:checked ~ .navbar__mobile-menu {
+    display: flex;
+  }
+
+  .navbar__mobile-item {
+    cursor: pointer;
+    padding: 0.6rem 0;
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      color: var(--color-fg_secondary);
+    }
+  }
+
+  @media (min-width: 44rem) {
+    .navbar__list {
+      padding: 0 2rem 0.5rem;
+    }
+
+    .navbar__left .navbar__item {
+      display: block;
+    }
+
+    .navbar__right {
+      gap: 0.75rem;
+    }
+
+    .navbar__search-toggle:checked ~ .navbar__search-input {
+      width: 12.5rem;
+    }
+
+    .navbar__profile-name {
+      display: block;
+    }
+
+    .navbar__burger {
+      display: none;
+    }
+
+    .navbar__mobile-menu {
+      display: none 
+    }
   }
 }

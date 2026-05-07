@@ -1,50 +1,79 @@
 .movie {
-    padding: 1.5rem;
+    background: var(--color-bg);
+    padding: 1.5rem 2rem;
 
     .movie__list {
+
         display: grid;
-        grid-template-columns: repeat(1fr);
-        gap: 1.4rem;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 5rem 0;
+        gap: 0.875rem;
         margin: 0;
-        padding: 0;
+
     }
 
-
     .movie__movie {
-        border-radius: 1rem;
+        position: relative;
+        border-radius: 0.25rem;
+        overflow: hidden;
         cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid #eaeaf2;
-        padding: 0;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background: var(--color-bg);
+        aspect-ratio: 2 / 3;
+        transition: transform 0.2s ease;
+
     }
 
     .movie__image {
-        border-radius: 1rem 1rem 0 0;
+        display: block;
         width: 100%;
-        aspect-ratio: 2 / 3;
+        height: 100%;
         object-fit: cover;
+        transition: transform 0.35s ease;
+    }
+
+    .movie__movie:hover .movie__image {
+        transform: scale(1.07);
+        
+
+    }
+
+    .movie__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, transparent 70%);
+        z-index: 1;
     }
 
     .movie__title {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: black;
-        text-align: center;
-        padding: 0.75rem 0.6rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0.625rem 0.625rem 0.75rem;
         margin: 0;
-        border-top: 1px solid #f0f0f5;
+        font-size: 0.825rem;
+        font-weight: 500;
+        color: var(--color-fg);
+        z-index: 2;
+        opacity: 0;
+        transform: translateY(6px);
+        transition:
+            opacity 0.25s ease,
+            transform 0.25s ease;
     }
 
-    .movie__movie:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    .movie__movie:hover .movie__title {
+        opacity: 1;
+
     }
+
+
 
     @media (min-width: 44rem) {
+
+
         .movie__list {
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
         }
     }
 

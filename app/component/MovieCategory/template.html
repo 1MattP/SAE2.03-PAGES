@@ -1,5 +1,12 @@
-<div class="category">
+<div class="category font-sans">
+  <h2 class="category__title">Catégories</h2>
+  <div class="category__container">
+    <button class="nav-btn prev" onclick="C.scrollCarousel(this, -1)">〈</button>
+
     <ul class="category__list">
-        {{categoryList}}
+      {{categoryList}}
     </ul>
+
+    <button class="nav-btn next" onclick="C.scrollCarousel(this, 1)">〉</button>
+  </div>
 </div>

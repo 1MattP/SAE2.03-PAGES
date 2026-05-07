@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>SAE2.03 APP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/base.css" />
+</head>
+
+<body>
+  <section id="profile" class="profile profile__hidden"></section>
+  <header id="header"></header>
+  <section id="featured"></section>
+  <section id="content"></section>
+
+  <script type="module">
+    import { NavBar } from "./component/NavBar/script.js";
+    import { Movie } from "./component/Movie/script.js";
+    import { MovieCategory } from "./component/MovieCategory/script.js";
+    import { MovieDetail } from "./component/MovieDetail/script.js";
+    import { OverlayProfile } from "./component/OverlayProfile/script.js";
+    import { Favorite } from "./component/Favorite/script.js";
+    import { FeaturedMovie } from "./component/FeaturedMovie/script.js";
+    import { Stats } from "./component/Stats/script.js";
+    import { Rating } from "./component/Rating/script.js";
+    import { Comment } from "./component/Comment/script.js";
+    import { DataComment } from "./data/dataComment.js";
+    import { DataRating } from "./data/dataRating.js";
+    import { DataStats } from "./data/dataStats.js";
+    import { DataMovie } from "./data/dataMovie.js";
+    import { DataProfile } from "./data/dataProfile.js";
+    import { DataFavorite } from "./data/dataFavorite.js";
+
+    // Controleur
+    // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
+    // Une fois l'application terminée, on pourrait remettre let C.
+    window.C = {};
+
+    C.handlerAbout = function () {
+      document.querySelector('#featured').innerHTML = '';
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", "C.handlerFavorite()", "C.handlerStats()");
+      C.getFeaturedMovies();
+      C.allcategory();
+    };
+
+    C.favorites = [];
+    C.handlerFavorite = async function () {
+      document.querySelector('#featured').innerHTML = '';
+      await C.loadFavorites();
+      V.renderFavorite(C.favorites);
+    }
+
+    C.start = function () {
+      V.renderNavBar("C.handlerAbout()", "C.handlerProfile()", "C.handlerFavorite()", "C.handlerStats()");
+      C.getMovie();
+      C.getProfile();
+      C.getFeaturedMovies();
+      C.allcategory();
+    };
+
+    C.getMovie = async function (movie) {
+      let data = await DataMovie.requestMovies(C.currentProfileAge);
+      if (data.length == 0) {
+        console.log("Aucun film disponible pour le moment.");
+      } else {
+        V.renderMovie(data);
+      }
+    }
+
+    C.handlerDetail = async function (id) {
+      document.querySelector('#featured').innerHTML = '';
+      let movie = await DataMovie.requestMovieDetails(id);
+      V.renderMovieDetail(movie);
+
+      let checkbox = document.querySelector('.favorite__btn');
+      let Favorite = C.favorites.some(f => f.movie_id == id);
+      checkbox.checked = Favorite;
+
+      await Rating.init(id, C.currentProfileId, DataRating);
+
+      let comments = await DataComment.get(id);
+      document.querySelector('#comment-list').innerHTML = Comment.formatMany(id, comments);
+    };
+
+
+
+
+    C.allcategory = async function () {
+      let categories = await DataMovie.requestCategory();
+      let movies = await DataMovie.requestMovies(C.currentProfileAge);
+      for (let category of categories) {
+        category.movies = movies.filter(movie => movie.category_name == category.name);
+      }
+      V.renderMovieCategory(categories);
+    };
+
+    C.getProfile = async function () {
+      let data = await DataProfile.read();
+
+      V.renderOverlayProfile(data);
+      document.querySelector('#profile').classList.remove('profile__hidden');
+    };
+    C.currentProfileAge = 0;
+    C.currentProfileId = null;
+    C.selectProfile = function (profile_id, profilname, min_age) {
+      C.currentProfileAge = min_age;
+      C.currentProfileId = profile_id;
+      document.querySelector('#profile').classList.add('profile__hidden');
+      console.log("Profil sélectionné :", profilname, "âge:", min_age);
+
+      C.loadFavorites();
+      C.allcategory();
+      C.getFeaturedMovies();
+    };
+    C.loadFavorites = async function () {
+      if (!C.currentProfileId) return;
+      C.favorites = await DataFavorite.readFavorites(C.currentProfileId);
+    };
+
+
+    C.handlerToggleFavorite = async function (movie_id) {
+      let Favorite = C.favorites.some(f => f.movie_id == movie_id);
+      if (Favorite) {
+        await DataFavorite.removeFavorite(movie_id, C.currentProfileId);
+        alert("Le film a été retiré de vos favoris.");
+      } else {
+        await DataFavorite.addFavorite(movie_id, C.currentProfileId);
+        alert("Le film a été ajouté à vos favoris.");
+      }
+
+      await C.loadFavorites();
+    };
+
+
+    C.handlerProfile = function () {
+      document.querySelector('#profile').classList.remove('profile__hidden');
+    };
+
+    C.getFeaturedMovies = async function () {
+      let data = await DataMovie.requestFeaturedMovies(C.currentProfileAge);
+      V.renderFeaturedMovies(data);
+    };
+
+    C.handlerStats = async function () {
+      document.querySelector('#featured').innerHTML = '';
+      let data = await DataStats.requestStats();
+      V.renderStats(data);
+    };
+
+    C.handlerSearch = async function (keyword) {
+      if (keyword === '') {
+        C.getFeaturedMovies();
+        C.allcategory();
+      } else {
+        document.querySelector('#featured').innerHTML = '';
+        let results = await DataMovie.requestSearch(keyword);
+        results = results.filter(movie => movie.min_age <= C.currentProfileAge || C.currentProfileAge === 0);
+        if (results.length === 0) {
+          document.querySelector('#content').innerHTML = '<p class="search__empty">Aucun film ne correspond à votre recherche.</p>';
+        } else {
+          V.renderMovie(results);
+        }
+      }
+    };
+    C.handlerRating = async function (movie_id, value) {
+
+      let existing = await DataRating.getRating(movie_id, C.currentProfileId);
+      await DataRating.addRating(movie_id, C.currentProfileId, value);
+      alert("Votre note a été enregistrée.");
+      await Rating.init(movie_id, C.currentProfileId, DataRating);
+    };
+
+    C.handlerAddComment = async function(movie_id) {
+    let content = document.querySelector('#comment-input').value;
+    let res = await DataComment.add(movie_id, C.currentProfileId, content);
+    alert(res);
+    let comments = await DataComment.get(movie_id);
+    document.querySelector('#comment-list').innerHTML = Comment.formatMany(movie_id, comments);
+    document.querySelector('#comment-input').value = '';
+};
+
+    // Vue (contient tout ce qui est relatif à l'affichage)
+    window.V = {};
+
+
+    /**
+     * V.renderNavBar
+     *
+     * Cette fonction est responsable de l'affichage de la barre de navigation (NavBar).
+     * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
+     * formaté par le composant NavBar.
+     */
+    V.renderNavBar = function (hAbout, hProfile, hFavorite, hStat) {
+      let header = document.querySelector("#header");
+      header.innerHTML = NavBar.format(hAbout, hProfile, hFavorite, hStat);
+    };
+    V.renderMovie = function (allmovie) {
+      let content = document.querySelector('#content');
+      content.innerHTML = Movie.formatMany(allmovie);
+    };
+
+    V.renderMovieDetail = function (moviedetail) {
+      let content = document.querySelector('#content');
+      content.innerHTML = MovieDetail.format(moviedetail);
+    }
+    V.renderMovieCategory = function (moviecategory) {
+      let content = document.querySelector('#content');
+      content.innerHTML = MovieCategory.formatMany(moviecategory);
+    }
+    V.renderOverlayProfile = function (allprofil) {
+      let content = document.querySelector('#profile');
+      content.innerHTML = OverlayProfile.formatMany(allprofil);
+
+
+    }
+    V.renderFavorite = function (favorite) {
+      let content = document.querySelector('#content');
+      content.innerHTML = Favorite.formatMany(favorite);
+    }
+    V.renderFeaturedMovies = function (data) {
+      let content = document.querySelector('#featured');
+      content.innerHTML = FeaturedMovie.formatMany(data);
+    };
+
+    V.renderStats = function (data) {
+      let content = document.querySelector('#content');
+      content.innerHTML = Stats.format(data);
+    };
+
+    C.start(); // Démarre l'application
+  </script>
+</body>
